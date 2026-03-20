@@ -94,28 +94,10 @@ function drawBresenham(x1,y1,x2,y2,size){
     }
 }
 
-// funcion para saber si los puntos forman triangulo
-// se comparan las pendientes
-// si las pendientes son iguales los puntos estan en la misma linea
-function esTriangulo(x1,y1,x2,y2,x3,y3){
-    let m1;
-    let m2;
-    if(x2-x1===0){
-        m1 = Infinity;
-    }
-    else{
-        m1 = (y2-y1)/(x2-x1);
-    }
-    if(x3-x2===0){
-        m2 = Infinity;
-    }
-    else{
-        m2 = (y3-y2)/(x3-x2);
-    }
-    if(m1===m2){
-        return false;
-    }
-    return true;
+// OPTIMIZACIÓN: Se reemplazó el cálculo de pendientes por una comparación usando determinante, eliminando divisiones y simplificando la lógica para mejorar el rendimiento y la precisión.
+function esTriangulo(x1, y1, x2, y2, x3, y3){
+    // usando determinante (producto cruzado)
+    return (x2 - x1)*(y3 - y1) !== (y2 - y1)*(x3 - x1);
 }
 
 // dibuja ejes con numeros para saber las posiciones
