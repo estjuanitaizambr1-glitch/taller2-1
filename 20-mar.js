@@ -174,7 +174,11 @@ function dibujarEjes(x1, y1, x2, y2, x3, y3){
 
 // funcion principal
 function dibujar(){
+
+    let t0 = performance.now(); // inicia tiempo
+
     limpiar();
+
     let x1 = parseInt(document.getElementById("x1").value);
     let y1 = parseInt(document.getElementById("y1").value);
     let x2 = parseInt(document.getElementById("x2").value);
@@ -183,24 +187,24 @@ function dibujar(){
     let y3 = parseInt(document.getElementById("y3").value);
     let size = parseInt(document.getElementById("grosor").value);
 
-    // calcular escala antes de dibujar ejes o lineas
     escala = calcularEscala(x1, y1, x2, y2, x3, y3);
 
     dibujarEjes(x1, y1, x2, y2, x3, y3);
 
-    // revisa si se forma triangulo
     if(!esTriangulo(x1,y1,x2,y2,x3,y3)){
-        document.getElementById("mensaje").innerText =
-        "Los puntos no forman un triángulo";
+        mensaje.innerText = "No es triángulo";
         return;
     }
-    document.getElementById("mensaje").innerText =
-    "Sí se forma un triángulo";
+
     drawLine(x1,y1,x2,y2,size,metodo);
     drawLine(x2,y2,x3,y3,size,metodo);
     drawLine(x3,y3,x1,y1,size,metodo);
-}
 
+    let t1 = performance.now(); // termina tiempo
+
+    mensaje.innerText += 
+        ` | Tiempo: ${(t1 - t0).toFixed(4)} ms`;
+}
 // limpia el canvas
 function limpiar(){
     ctx.clearRect(0,0,canvas.width,canvas.height);
