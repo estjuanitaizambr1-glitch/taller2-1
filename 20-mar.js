@@ -41,23 +41,17 @@ function calcularEscala(x1, y1, x2, y2, x3, y3){
     return Math.min(escX, escY);      
 }
 
-// funcion general para dibujar linea
-// contiene las operaciones comunes a DDA y Bresenham
-// llama al algoritmo que corresponda
+// OPTIMIZACIÓN: Se eliminaron cálculos innecesarios (dx, dy), se usa desestructuración para mayor claridad y se selecciona el algoritmo dinámicamente para simplificar el código.
 function drawLine(x1, y1, x2, y2, size, method){
-    // operacion comun 1: convertir coordenadas canvas a cartesianas
-    let p1 = canvasToCartesiana({x: x1, y: y1}, canvas.height);
-    let p2 = canvasToCartesiana({x: x2, y: y2}, canvas.height);
-    // operacion comun 2: calcular deltas
-    let dx = p2[0] - p1[0];
-    let dy = p2[1] - p1[1];
+    // convertir coordenadas
+    const [x1c, y1c] = canvasToCartesiana({x: x1, y: y1}, canvas.height);
+    const [x2c, y2c] = canvasToCartesiana({x: x2, y: y2}, canvas.height);
 
-    if(method === "DDA"){
-        drawDDA(p1[0], p1[1], p2[0], p2[1], size);
-    }
-    else{
-        drawBresenham(p1[0], p1[1], p2[0], p2[1], size);
-    }
+    // elegir algoritmo directamente
+    const algoritmo = (method === "DDA") ? drawDDA : drawBresenham;
+
+    algoritmo(x1c, y1c, x2c, y2c, size);
+}
 }
 
 // algoritmo DDA
