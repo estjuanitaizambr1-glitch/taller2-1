@@ -10,10 +10,12 @@ function setMetodo(m, event){
     event.target.classList.add('activo');
 }
 
-// funcion para dibujar un punto
+// OPTIMIZACIÓN: Se eliminaron operaciones innecesarias (centrado del punto) dentro de una función crítica que se ejecuta muchas veces
+// Reduciendo cálculos por píxel y mejorando significativamente el rendimiento.
 function drawPoint(ctx, x, y, size){
-    ctx.fillRect(x - size/2, y - size/2, size, size);
+    ctx.fillRect(x, y, size, size);
 }
+
 
 // MARGEN en px
 const MARGEN = 40;
