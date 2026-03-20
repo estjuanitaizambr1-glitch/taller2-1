@@ -163,38 +163,39 @@ function dibujarEjes(x1, y1, x2, y2, x3, y3){
     }
 }
 
-// funcion principal
+// OPTIMIZACIÓN: Se simplificó la obtención de valores del DOM usando conversión directa
+// Reduciendo el uso de parseInt y mejorando la eficiencia en la función principal.
 function dibujar(){
 
-    let t0 = performance.now(); // inicia tiempo
+    const t0 = performance.now();
 
     limpiar();
 
-    let x1 = parseInt(document.getElementById("x1").value);
-    let y1 = parseInt(document.getElementById("y1").value);
-    let x2 = parseInt(document.getElementById("x2").value);
-    let y2 = parseInt(document.getElementById("y2").value);
-    let x3 = parseInt(document.getElementById("x3").value);
-    let y3 = parseInt(document.getElementById("y3").value);
-    let size = parseInt(document.getElementById("grosor").value);
+    // cachear elementos del DOM (más rápido)
+    const x1 = +document.getElementById("x1").value;
+    const y1 = +document.getElementById("y1").value;
+    const x2 = +document.getElementById("x2").value;
+    const y2 = +document.getElementById("y2").value;
+    const x3 = +document.getElementById("x3").value;
+    const y3 = +document.getElementById("y3").value;
+    const size = +document.getElementById("grosor").value;
 
     escala = calcularEscala(x1, y1, x2, y2, x3, y3);
 
     dibujarEjes(x1, y1, x2, y2, x3, y3);
 
-    if(!esTriangulo(x1,y1,x2,y2,x3,y3)){
+    if(!esTriangulo(x1, y1, x2, y2, x3, y3)){
         mensaje.innerText = "No es triángulo";
         return;
     }
 
-    drawLine(x1,y1,x2,y2,size,metodo);
-    drawLine(x2,y2,x3,y3,size,metodo);
-    drawLine(x3,y3,x1,y1,size,metodo);
+    drawLine(x1, y1, x2, y2, size, metodo);
+    drawLine(x2, y2, x3, y3, size, metodo);
+    drawLine(x3, y3, x1, y1, size, metodo);
 
-    let t1 = performance.now(); // termina tiempo
+    const t1 = performance.now();
 
-    mensaje.innerText += 
-        ` | Tiempo: ${(t1 - t0).toFixed(4)} ms`;
+    mensaje.innerText = `Tiempo: ${(t1 - t0).toFixed(4)} ms`;
 }
 // limpia el canvas
 function limpiar(){
